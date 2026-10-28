@@ -1,0 +1,67 @@
+{
+  "info": {
+    "name": "SkillBridge API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Register Student",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Student Demo\",\n  \"email\": \"student@marwadi.edu\",\n  \"password\": \"Password123!\",\n  \"university\": \"Marwadi University\",\n  \"degree\": \"B.Tech CS\",\n  \"targetRole\": \"Full-Stack Web Developer\",\n  \"skills\": [\"React.js\", \"JavaScript\", \"HTML5\", \"CSS3\", \"Git\"]\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.token) { pm.environment.set('token', jsonData.token); }"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"student@marwadi.edu\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+      }
+    },
+    {
+      "name": "Internships - List All",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/internships", "host": ["{{baseUrl}}"], "path": ["api", "internships"] }
+      }
+    },
+    {
+      "name": "Applications - Dashboard Stats",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/applications/dashboard-stats", "host": ["{{baseUrl}}"], "path": ["api", "applications", "dashboard-stats"] }
+      }
+    },
+    {
+      "name": "Skill-Gap - Overall Analysis",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/skill-gap/overall", "host": ["{{baseUrl}}"], "path": ["api", "skill-gap", "overall"] }
+      }
+    }
+  ]
+}
